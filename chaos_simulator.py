@@ -5,6 +5,7 @@ population = random.randint(20, 50)
 food = random.randint(50, 150)
 gold = random.randint(20, 80)
 happiness = random.randint(40, 90)
+wood = random.randint(30, 120)
 score = 0
 
 # Starting message
@@ -15,6 +16,7 @@ print("=" * 35)
 # Starting resources
 print(f"Population: {population}")
 print(f"Food: {food}")
+print(f"Wood: {wood}")
 print(f"Gold: {gold}")
 print(f"Happiness: {happiness}")
 
@@ -40,6 +42,8 @@ events = [
     ("A virus spreads amongst the livestock!", "food", -10),
     ("The settlers have found a mushroom spot!", "food", 15),
     ("The settlers are trying cannibalism...", "food", 10, "happiness", -10, "population", -5),
+    ("The settlers chopped some wood.", "wood", 20),
+    ("A small fire started in the wood supply!", "wood", -15)
     # Add a way to change the probability on getting different events
     ]
 
@@ -58,6 +62,8 @@ for day in range(1, maxDays + 1):
         happiness += event[2]
     elif event[1] == "population":
         population += event[2]
+    elif event[1] == "wood":
+        wood += event[2]
 
 
     # Daily food consumption
