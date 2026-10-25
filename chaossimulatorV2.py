@@ -14,11 +14,11 @@ RESET = "\033[0m"
 import random
 
 # Settlement resources
-population = 20
-food = 100
-wood = 30
-gold = 50
-happiness = 70
+population = random.randint(10, 50)
+food = random.randint(10, 100)
+wood = random.randint(15, 60)
+gold = random.randint(1, 30)
+happiness = random.randint(40, 60)
 
 # Days
 day = 1
@@ -95,8 +95,11 @@ def random_event():
 #----------------------------------------#
 
 while day <= max_days:
-    random_event()
     show_status()
+    random_event()
     action_menu()
 
     day += 1
+
+    if day == 30:
+        print("The settlement survived all 30 days!")
