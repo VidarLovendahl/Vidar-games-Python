@@ -126,6 +126,7 @@ for day in range(1, maxDays + 1):
     if food < 0:
         print(RED + "The settlement is starving!" + RESET)
         happiness -= 10
+        population -= 2
         food = 0
 
     # Unhappy people may leave
@@ -171,4 +172,4 @@ for day in range(1, maxDays + 1):
         break
 
 else:
-    print(YELLOW + f"\nThe settlement survived all 30 days! With a score of {score}!" + RESET)
+    print(YELLOW + f"\nThe settlement survived all {maxDays} days! With a score of {score}!" + RESET)
