@@ -1,3 +1,17 @@
+# Colors
+BLACK = "\033[30m"
+RED = "\033[31m"
+GREEN = "\033[32m"
+YELLOW = "\033[33m"
+BLUE = "\033[34m"
+MAGENTA = "\033[35m"
+CYAN = "\033[36m"
+WHITE = "\033[37m"
+RESET = "\033[0m"
+# Example:  print(RED + "Error!" + RESET)
+
+
+
 import random
 
 # Starting resources
@@ -24,61 +38,100 @@ print(f"Happiness: {happiness}")
 day = 0
 maxDays = int(input("How many days would you like to simulate? "))
 
-# Events
+# Events: message, resource, amount, chance currently 100%
+
 events = [
-    ("Its a calm day, nothing happens.", "gold", 0),
-    ("Its a calm day, nothing happens.", "gold", 0),
-    ("Its a calm day, nothing happens.", "gold", 0),
-    ("A merchant donates 20 gold!", "gold", 20),
-    ("A thief steals 15 gold!", "gold", -15),
-    ("A good harvest provides 25 food!", "food", 25),
-    ("A plague destroys the harvest!", "food", -20),
-    ("A festival raises happiness!", "happiness", 15),
-    ("A boring week lowers happiness!", "happiness", -10),
-    ("New settlers arrive!", "population", 5),
-    ("Some settlers leave the village.", "population", -3),
-    ("A meteor strikes the settlements food supply!", "food", -35),
-    ("A settler has found a gold vein!", "gold", 50),
-    ("A virus spreads amongst the livestock!", "food", -10),
-    ("The settlers have found a mushroom spot!", "food", 15),
-    ("The settlers are trying cannibalism...", "food", 10, "happiness", -10, "population", -5),
-    ("The settlers chopped some wood.", "wood", 20),
-    ("A small fire started in the wood supply!", "wood", -15)
-    # Add a way to change the probability on getting different events
-    ]
+    ("Its a calm day, nothing happens.", {}, 20),
+
+    (YELLOW + "A merchant donates 20 gold!" + RESET,
+     {"gold": 20}, 5),
+
+    (RED + "A thief steals 15 gold!" + RESET,
+     {"gold": -15}, 5),
+
+    (YELLOW + "A good harvest provides 25 food!" + RESET,
+     {"food": 25}, 15),
+
+    (RED + "A plague destroys the harvest!" + RESET,
+     {"food": -20}, 10),
+
+    (YELLOW + "A festival raises happiness!" + RESET,
+     {"happiness": 15}, 5),
+
+    (RED + "A boring week lowers happiness!" + RESET,
+     {"happiness": -10}, 5),
+
+    (YELLOW + "New settlers arrive!" + RESET,
+     {"population": 5}, 5),
+
+    (RED + "Some settlers leave the village." + RESET,
+     {"population": -3}, 5),
+
+    (MAGENTA + "A meteor strikes the settlements food supply!" + RESET,
+     {"food": -35}, 2),
+
+    (YELLOW + "A settler has found a gold vein!" + RESET,
+     {"gold": 50}, 3),
+
+    (RED + "A virus spreads amongst the livestock!" + RESET,
+     {"food": -10}, 5),
+
+    (YELLOW + "The settlers have found a mushroom spot!" + RESET,
+     {"food": 15}, 5),
+
+    (MAGENTA + "The settlers are trying cannibalism..." + RESET,
+     {"food": 10, "happiness": -10, "population": -5}, 2),
+
+    (YELLOW + "The settlers chopped some wood." + RESET,
+     {"wood": 20}, 4),
+
+    (RED + "A small fire started in the wood supply!" + RESET,
+     {"wood": -15}, 4)
+]
+
 
 # Random events each day
 for day in range(1, maxDays + 1):
+    input("\nPress ENTER to begin the next day...")
     print(f"\n--- DAY {day} ---")
 
-    event = random.choice(events)
+    
+    # Select a random event using its probability weight
+    event = random.choices(
+        events,
+        weights=[e[2] for e in events],
+        k=1
+    )[0]
+
+    # Display the event message
     print(event[0])
 
-    if event[1] == "gold":
-        gold += event[2]
-    elif event[1] == "food":
-        food += event[2]
-    elif event[1] == "happiness":
-        happiness += event[2]
-    elif event[1] == "population":
-        population += event[2]
-    elif event[1] == "wood":
-        wood += event[2]
-
+    # Apply every resource change from the event
+    for resource, amount in event[1].items():
+        if resource == "food":
+            food += amount
+        elif resource == "gold":
+            gold += amount
+        elif resource == "happiness":
+            happiness += amount
+        elif resource == "population":
+            population += amount
+        elif resource == "wood":
+            wood += amount
 
     # Daily food consumption
-    food -= population // 3
+    food -= population // 2
 
     # Hunger makes people unhappy
     if food < 0:
-        print("The settlement is starving!")
+        print(RED + "The settlement is starving!" + RESET)
         happiness -= 10
         food = 0
 
     # Unhappy people may leave
     if happiness < 20 and population > 0:
         population -= min(2, population)
-        print("Some unhappy settlers leave!")
+        print(RED + "Some unhappy settlers leave!" + RESET)
 
     # When reaching 100 gold, rewards are given
     if gold >= 100:
@@ -86,17 +139,17 @@ for day in range(1, maxDays + 1):
         food += 20
         happiness += 15
         gold = 15
-        print("The settlment buys some resources with their gold!")
+        print(GREEN + "The settlment buys some resources with their gold!" + RESET)
 
     # A lot of food makes people happy
     if food >= 75:
         happiness += 5
-        print("Everyone gets to eat!")
+        print(GREEN + "Everyone gets to eat!" + RESET)
 
     # A lot of gold makes people happy
     if gold >= 65:
         happiness += 10
-        print("There are no taxes today!")
+        print(GREEN + "There are no taxes today!" + RESET)
 
     # Keep values within sensible limits
     population = max(0, population)
@@ -114,8 +167,8 @@ for day in range(1, maxDays + 1):
     score = population + food + gold + happiness + day
 
     if population == 0:
-        print(f"\nTHE SETTLEMENT HAS COLLAPSED! With a score of {score}")
+        print(RED + f"\nTHE SETTLEMENT HAS COLLAPSED! With a score of {score}" + RESET)
         break
 
 else:
-    print(f"\nThe settlement survived all 30 days! With a score of {score}!")
+    print(YELLOW + f"\nThe settlement survived all 30 days! With a score of {score}!" + RESET)
