@@ -59,8 +59,9 @@ def action_menu():
     print("2. Gather 10 wood")
     print("3. Trade 10 food for 15 gold")
     print("4. Hold a festival")
+    print("5. Purchase settlement upgrades")
 
-    choice = input("Enter your choice (1-4): ")
+    choice = input(CYAN+"Enter your choice (1-5): "+RESET)
 
     if choice == "1":
         food += 25
@@ -85,9 +86,12 @@ def action_menu():
             gold -= 10
             happiness += 15
             print("You held a festival!")
+    elif choice == "5":
+        upgrade_menu()
 
     else:
-        print("Invalid choice! Try again.")
+        print(RED+"Invalid choice! Try again."+RESET)
+        action_menu()
 
 def upgrade_menu():
     global wood, gold, farms, population, warehouses, housing
@@ -100,7 +104,7 @@ def upgrade_menu():
 
     choice = input(CYAN+"Enter your choice (1-4): "+RESET)
 
-    while choice not in ("1", "4"):
+    while choice not in ("1","2", "3", "4"):
         choice = input(CYAN+"Enter your choice (1-4): "+RESET)
 
     if choice == "1":
@@ -138,6 +142,7 @@ def random_event():
     global food, wood, gold, happiness, population
 
     event_number = random.randint(1, 4)
+    print(f"DEBUG: Event roll = {event_number}, Day = {day}")
 
     if event_number == 1:
         merchant_event()
