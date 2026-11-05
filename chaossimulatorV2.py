@@ -210,11 +210,11 @@ def stranger_event():
 
     last_stranger_day = day
     print(MAGENTA+ "A strange man comes to the settlement. Offering you his help." +RESET)
-    choice = input(CYAN+ "Press 1 to accept the offer, or press 2 to decline it." +RESET)
+    choice = input(CYAN+ "Press 1 to accept the offer, or press 2 to decline it. " +RESET)
 
     while choice not in ("1", "2"):
         print(RED+ "Invalid choice." +RESET)
-        choice = input(CYAN+ "Press 1 to accept the offer, or press 2 to decline it." +RESET)
+        choice = input(CYAN+ "Press 1 to accept the offer, or press 2 to decline it. " +RESET)
 
     if choice == "1":
         outcome = random.randint(1, 10)
