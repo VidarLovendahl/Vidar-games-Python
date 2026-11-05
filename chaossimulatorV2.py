@@ -335,7 +335,7 @@ def end_day():
         game_over = True
 #----------------------------------------#
 
-while not game_over: # day <= max_days and 
+while not game_over: # day <= max_days and
     cur_day()
     random_event()
     show_status()
