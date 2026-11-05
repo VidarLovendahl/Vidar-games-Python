@@ -14,7 +14,7 @@ RESET = "\033[0m"
 import random
 
 # Settlement resources
-population = random.randint(10, 50)
+population = random.randint(10, 20)
 food = random.randint(10, 100)
 wood = random.randint(15, 60)
 gold = random.randint(1, 30)
@@ -253,7 +253,7 @@ def small_event():
         wood += 10
         print(YELLOW+"The settlers found a dead tree and chopped it up for some extra wood!"+RESET)
 
-    else:
+    elif random_number == 3:
         gold += 5
         print(YELLOW+"A little boy found a treasure chest by the beach, containing some gold!"+RESET)
 
