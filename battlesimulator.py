@@ -15,7 +15,11 @@ import random
 # PLAYER STATS
 player_health = random.randint(75, 100)
 player_damage = random.randint(10, 20)
+player_armor = random.randint(5, 10)
 max_health = player_health
+weapon = "Basic Sword"
+if weapon == "Basic Sword":
+    weapon_damage = 5
 
 # ENEMY STATS
 enemy_health = 0
@@ -86,6 +90,7 @@ def newbattle():
 def show_status():
     print(YELLOW + f"\nYour health: {player_health}" + RESET)
     print(YELLOW + f"\nYour damage: {player_damage}" + RESET)
+    print(YELLOW + f"\nCurrent weapon: {weapon} +{weapon_damage} damage" + RESET)
 
 def upgrade_player():
     global player_health, player_damage
