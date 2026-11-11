@@ -20,7 +20,7 @@ max_health = player_health
 weapon = "Basic Sword"
 if weapon == "Basic Sword":
     weapon_damage = 5
-
+total_damage = player_damage + weapon_damage
 # ENEMY STATS
 enemy_health = 0
 enemy_damage = 0
@@ -31,7 +31,7 @@ battle_count = 1
 
 # FUNCTIONS
 def player_choices():
-    global player_health, enemy_health, player_damage, enemy_damage, battle_count, enemy_damage_multiplier
+    global player_health, enemy_health, player_damage, enemy_damage, battle_count, enemy_damage_multiplier, total_damage
 
     while player_health > 0 and enemy_health > 0:
         print("\nWhat would you like to do?")
@@ -45,8 +45,8 @@ def player_choices():
 
         if choice == "1":
             print(GREEN + "\nYou chose to attack!" + RESET)
-            enemy_health -= player_damage
-            print(RED + f"\nYou dealt {player_damage} damage to the enemy!" + RESET)
+            enemy_health -= total_damage
+            print(RED + f"\nYou dealt {total_damage} damage to the enemy!" + RESET)
             print(RED + f"\nEnemy health is now {enemy_health}." + RESET)
 
         elif choice == "2":
@@ -77,7 +77,7 @@ def player_choices():
             exit()
 
 def newbattle():
-    global enemy_health, enemy_damage, battle_count
+    global enemy_health, enemy_damage, battle_count, total_damage
 
     enemy_health = random.randint(20, 100)
     enemy_damage = random.randint(5, 15) * enemy_damage_multiplier
@@ -93,7 +93,7 @@ def show_status():
     print(YELLOW + f"\nCurrent weapon: {weapon} +{weapon_damage} damage" + RESET)
 
 def upgrade_player():
-    global player_health, player_damage
+    global player_health, player_damage, max_health, total_damage
 
     print(CYAN + "\nWhat would you like to upgrade?" + RESET)
     print("1. Increase your damage by 5")
@@ -101,8 +101,8 @@ def upgrade_player():
     upgrade_choice = input(CYAN + "\nEnter your choice (1 or 2): " + RESET)
 
     if upgrade_choice == "1":
-        player_damage += 5
-        print(GREEN + f"\nYour damage has been increased to {player_damage}!" + RESET)
+        total_damage += 5
+        print(GREEN + f"\nYour damage has been increased to {total_damage}!" + RESET)
     elif upgrade_choice == "2":
         max_health += 10
         player_health = max_health
